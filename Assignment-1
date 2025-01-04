@@ -1,1 +1,74 @@
+Assignment 1
+Set B) 3
+import java.io.*;
+import java.util.*;
 
+public class PhoneBook {
+
+    // Define hash tables for name to phone number and phone number to name
+    private static Hashtable<String, String> nameToPhone = new Hashtable<>();
+    private static Hashtable<String, String> phoneToName = new Hashtable<>();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Load the data from the file into the hash tables
+        loadDataFromFile("contacts.txt");
+
+        // Continuously prompt for user input
+        while (true) {
+            System.out.println("Enter a name or phone number to look up (or 'exit' to quit):");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting the program.");
+                break;
+            }
+
+            // Check if the input is a valid phone number or name and search
+            if (input.matches("[0-9]+")) { // Check if the input is a phone number
+                String name = phoneToName.get(input);
+                if (name != null) {
+                    System.out.println("Phone number " + input + " is associated with the name: " + name);
+                } else {
+                    System.out.println("Phone number not found in the records.");
+                }
+            } else { // Assume input is a name
+                String phone = nameToPhone.get(input);
+                if (phone != null) {
+                    System.out.println("Name " + input + " has the phone number: " + phone);
+                } else {
+                    System.out.println("Name not found in the records.");
+                }
+            }
+        }
+
+        scanner.close();
+    }
+
+    // Method to load data from a text file into the hash tables
+    private static void loadDataFromFile(String filename) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Split the line into name and phone number based on tab character
+                String[] fields = line.split("\t");
+                if (fields.length == 2) {
+                    String name = fields[0].trim();
+                    String phone = fields[1].trim();
+
+                    // Put the data into the hash tables
+                    nameToPhone.put(name, phone);
+                    phoneToName.put(phone, name);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the file: " + e.getMessage());
+        }
+    }
+}
+
+Text File contacts.txt
+Rohan  9356426942
+Diya  9326548792
+Druv  9158732568
