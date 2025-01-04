@@ -1,6 +1,99 @@
 Assignment 1
-Set B) 3
-hh
+Set A)1
+
+
+Set B)1
+
+import java.util.*;
+
+public class UniqueSortedIntegers {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Asking the user for the number of integers they want to input
+        System.out.print("Enter the number of integers: ");
+        int n = scanner.nextInt();
+        
+        // Create a TreeSet to store integers in sorted order and automatically remove duplicates
+        Set<Integer> uniqueIntegers = new TreeSet<>();
+        
+        // Accept 'n' integers from the user
+        System.out.println("Enter " + n + " integers:");
+
+        for (int i = 0; i < n; i++) {
+            int num = scanner.nextInt();
+            uniqueIntegers.add(num);  // TreeSet will ignore duplicates
+        }
+        
+        // Display the integers in sorted order (no duplicates)
+        System.out.println("\nIntegers in sorted order (duplicates removed):");
+        for (int num : uniqueIntegers) {
+            System.out.println(num);
+        }
+
+        // Close the scanner object
+        scanner.close();
+    }
+}
+OUTPUT:-
+Enter the number of integers: 5
+Enter 5 integers:
+20
+10
+10
+50
+11
+
+Integers in sorted order (duplicates removed):
+10
+11
+20
+50
+
+Set b) 2
+
+import java.util.*;
+
+public class HashMapSortByKey {
+
+    public static void main(String[] args) {
+
+        // Create a HashMap with unsorted keys
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("Rohan", 25);
+        map.put("Diya", 30);
+        map.put("Druv", 20);
+        map.put("Krishna", 35);
+        map.put("Rudra", 40);
+
+        // Display the HashMap before sorting
+        System.out.println("Before sorting by keys:");
+        printMap(map);
+
+        // Sort the HashMap by keys
+        Map<String, Integer> sortedMap = sortByKey(map);
+
+        // Display the HashMap after sorting
+        System.out.println("\nAfter sorting by keys:");
+        printMap(sortedMap);
+    }
+
+    // Method to sort HashMap by keys
+    private static Map<String, Integer> sortByKey(Map<String, Integer> map) {
+        // Convert the map to a TreeMap which automatically sorts by keys
+        return new TreeMap<>(map);
+    }
+
+    // Method to print the contents of the map
+    private static void printMap(Map<String, Integer> map) {
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+}
+
+
+set B) 3
 import java.io.*;
 import java.util.*;
 
