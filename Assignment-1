@@ -1,5 +1,240 @@
 Assignment 1
 Set A)1
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class CityList {
+    public static void main(String[] args) {
+        // Create a scanner object for user input
+        Scanner scanner = new Scanner(System.in);
+
+        // Ask for the number of cities
+        System.out.print("Enter the number of cities: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        // Create an ArrayList to store city names
+        ArrayList<String> cities = new ArrayList<>();
+
+        // Accept the names of 'n' cities
+        System.out.println("Enter the names of " + n + " cities:");
+        for (int i = 0; i < n; i++) {
+            String city = scanner.nextLine();
+            cities.add(city);
+        }
+
+        // Display the contents of the ArrayList
+        System.out.println("\nCities in the list:");
+        for (String city : cities) {
+            System.out.println(city);
+        }
+
+        // Remove all elements from the ArrayList
+        cities.clear();
+
+        // Display the contents of the ArrayList after removal
+        System.out.println("\nAfter removing all elements, the list is empty:");
+        if (cities.isEmpty()) {
+            System.out.println("The list is empty.");
+        }
+
+        // Close the scanner object
+        scanner.close();
+    }
+}
+
+Output:-
+Enter the number of cities: 3
+Enter the names of 3 cities:
+New York
+Paris
+Tokyo
+
+Cities in the list:
+New York
+Paris
+Tokyo
+
+After removing all elements, the list is empty:
+The list is empty.
+Set A)2
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class FriendsList {
+    public static void main(String[] args) {
+        // Create a scanner object for user input
+        Scanner scanner = new Scanner(System.in);
+
+        // Ask for the number of friends
+        System.out.print("Enter the number of friends: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character after nextInt()
+
+        // Create a LinkedList to store friends' names
+        LinkedList<String> friends = new LinkedList<>();
+
+        // Accept the names of 'n' friends
+        System.out.println("Enter the names of " + n + " friends:");
+        for (int i = 0; i < n; i++) {
+            String friendName = scanner.nextLine();
+            friends.add(friendName);
+        }
+
+        // Display the contents of the LinkedList
+        System.out.println("\nFriends List:");
+        for (String friend : friends) {
+            System.out.println(friend);
+        }
+
+        // Close the scanner object
+        scanner.close();
+    }
+}
+
+Output:-
+Enter the number of friends: 3
+Enter the names of 3 friends:
+John
+Alice
+Bob
+
+Friends List:
+John
+Alice
+Bob
+
+Set A)3
+import java.util.TreeSet;
+
+public class ColorTreeSet {
+    public static void main(String[] args) {
+        // Create a TreeSet to store color names (strings)
+        TreeSet<String> colors = new TreeSet<>();
+
+        // Add some color names to the TreeSet
+        colors.add("Red");
+        colors.add("Blue");
+        colors.add("Green");
+        colors.add("Yellow");
+        colors.add("Orange");
+
+        // Display the contents of the TreeSet
+        System.out.println("Colors in the TreeSet:");
+        for (String color : colors) {
+            System.out.println(color);
+        }
+    }
+}
+
+Output:-
+Colors in the TreeSet:
+Blue
+Green
+Orange
+Red
+Yellow
+
+Set A)4
+import java.util.Hashtable;
+
+public class StudentContactList {
+    public static void main(String[] args) {
+        // Create a Hashtable to store mobile number (String) and student name (String)
+        Hashtable<String, String> contacts = new Hashtable<>();
+
+        // Add mobile numbers and student names to the Hashtable
+        contacts.put("9876543210", "John Doe");
+        contacts.put("9123456789", "Alice Smith");
+        contacts.put("9988776655", "Bob Johnson");
+        contacts.put("9112233445", "Charlie Brown");
+
+        // Display the contact list
+        System.out.println("Contact List:");
+        for (String mobileNumber : contacts.keySet()) {
+            String studentName = contacts.get(mobileNumber);
+            System.out.println("Mobile Number: " + mobileNumber + " | Student Name: " + studentName);
+        }
+    }
+}
+OUTPUT:-
+Contact List:
+Mobile Number: 9876543210 | Student Name: John Doe
+Mobile Number: 9123456789 | Student Name: Alice Smith
+Mobile Number: 9988776655 | Student Name: Bob Johnson
+Mobile Number: 9112233445 | Student Name: Charlie Brown
+
+Black Box Answer:-
+import java.util.LinkedList;
+
+class HashTable {
+    private static class Entry {
+        String mobileNumber;
+        String studentName;
+
+        Entry(String mobileNumber, String studentName) {
+            this.mobileNumber = mobileNumber;
+            this.studentName = studentName;
+        }
+    }
+
+    private LinkedList<Entry>[] table;
+    private int size;
+
+    @SuppressWarnings("unchecked")
+    public HashTable(int size) {
+        this.size = size;
+        table = new LinkedList[size];
+        for (int i = 0; i < size; i++) {
+            table[i] = new LinkedList<>();
+        }
+    }
+
+    private int hash(String mobileNumber) {
+        return Math.abs(mobileNumber.hashCode()) % size; // Hash function to get the index
+    }
+
+    public void insert(String mobileNumber, String studentName) {
+        int index = hash(mobileNumber);
+        for (Entry entry : table[index]) {
+            if (entry.mobileNumber.equals(mobileNumber)) {
+                entry.studentName = studentName; // Update existing entry
+                return;
+            }
+        }
+        // If not found, add a new entry
+        table[index].add(new Entry(mobileNumber, studentName));
+    }
+
+    public void display() {
+        System.out.println("Contact List:");
+        for (LinkedList<Entry> bucket : table) {
+            for (Entry entry : bucket) {
+                System.out.println("Mobile Number: " + entry.mobileNumber + ", Student Name: " + entry.studentName);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        HashTable contactList = new HashTable(10);
+
+        // Inserting some contacts
+        contactList.insert("1234567890", "Alice");
+        contactList.insert("0987654321", "Bob");
+        contactList.insert("1231231234", "Charlie");
+        contactList.insert("4564564567", "David");
+        contactList.insert("1234567890", "Alice Smith"); // Update Alice's name
+
+        // Displaying the contact list
+        contactList.display();
+    }
+}
+OUTPUT:-
+Contact List:
+Mobile Number: 1234567890, Student Name: Alice Smith
+Mobile Number: 0987654321, Student Name: Bob
+Mobile Number: 1231231234, Student Name: Charlie
+Mobile Number: 4564564567, Student Name: David
 
 
 Set B)1
@@ -166,3 +401,161 @@ Text File contacts.txt
 Rohan  9356426942
 Diya  9326548792
 Druv  9158732568
+
+Set C)2
+import java.util.LinkedList;
+
+public class IntegerLinkedList {
+
+    public static void main(String[] args) {
+        // Create a LinkedList of Integer objects
+        LinkedList<Integer> list = new LinkedList<>();
+
+        // Add some elements to the LinkedList
+        list.add(10);
+        list.add(20);
+        list.add(30);
+        list.add(40);
+
+        System.out.println("Original LinkedList: " + list);
+
+        // 1. Add an element at the first position
+        list.addFirst(5);  // Adds 5 to the beginning of the list
+        System.out.println("After adding 5 at the first position: " + list);
+
+        // 2. Delete the last element
+        list.removeLast();  // Removes the last element (40 in this case)
+        System.out.println("After deleting the last element: " + list);
+
+        // 3. Display the size of the LinkedList
+        System.out.println("Size of the LinkedList: " + list.size());
+    }
+}
+OUTPUT:-
+Original LinkedList: [10, 20, 30, 40]
+After adding 5 at the first position: [5, 10, 20, 30, 40]
+After deleting the last element: [5, 10, 20, 30]
+Size of the LinkedList: 4
+
+
+
+
+
+Set C)3
+import java.io.*;
+import java.util.*;
+
+public class FileEditor {
+
+    public static void main(String[] args) {
+        // Check if file path is provided
+        if (args.length != 1) {
+            System.out.println("Usage: java FileEditor <file-path>");
+            return;
+        }
+
+        String filePath = args[0];
+        List<String> lines = new ArrayList<>();
+
+        // Read the file into the list
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the file: " + e.getMessage());
+            return;
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        boolean exit = false;
+
+        while (!exit) {
+            // Display menu
+            System.out.println("\nMenu:");
+            System.out.println("1. Insert line");
+            System.out.println("2. Delete line");
+            System.out.println("3. Append line");
+            System.out.println("4. Modify line");
+            System.out.println("5. Exit");
+
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();  // Consume the newline character after nextInt()
+
+            switch (choice) {
+                case 1: // Insert line
+                    System.out.print("Enter the line number to insert at: ");
+                    int insertIndex = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                    System.out.print("Enter the line to insert: ");
+                    String insertLine = scanner.nextLine();
+                    if (insertIndex >= 0 && insertIndex <= lines.size()) {
+                        lines.add(insertIndex, insertLine);
+                    } else {
+                        System.out.println("Invalid index.");
+                    }
+                    break;
+
+                case 2: // Delete line
+                    System.out.print("Enter the line number to delete: ");
+                    int deleteIndex = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                    if (deleteIndex >= 0 && deleteIndex < lines.size()) {
+                        lines.remove(deleteIndex);
+                    } else {
+                        System.out.println("Invalid index.");
+                    }
+                    break;
+
+                case 3: // Append line
+                    System.out.print("Enter the line to append: ");
+                    String appendLine = scanner.nextLine();
+                    lines.add(appendLine);
+                    break;
+
+                case 4: // Modify line
+                    System.out.print("Enter the line number to modify: ");
+                    int modifyIndex = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                    if (modifyIndex >= 0 && modifyIndex < lines.size()) {
+                        System.out.print("Enter the new content for the line: ");
+                        String modifiedLine = scanner.nextLine();
+                        lines.set(modifyIndex, modifiedLine);
+                    } else {
+                        System.out.println("Invalid index.");
+                    }
+                    break;
+
+                case 5: // Exit
+                    try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+                        for (String line : lines) {
+                            bw.write(line);
+                            bw.newLine();
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Error writing to the file: " + e.getMessage());
+                    }
+                    exit = true;
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+
+        scanner.close();
+    }
+}
+OUTPUT:-
+Menu:
+1. Insert line
+2. Delete line
+3. Append line
+4. Modify line
+5. Exit
+Enter your choice: 1
+Enter the line number to insert at: 2
+Enter the line to insert: This is a new line.
+
